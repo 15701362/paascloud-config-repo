@@ -16,9 +16,9 @@ hystrix:
         timeout:
           enabled: true
 info:
-  鍏充簬鎴戜滑: http://paascloud.net
-  钁椾綔鐧昏鍙�: 2018SR320076
-  杞欢钁椾綔鏉�: paascloud蹇€熸惌寤轰紒涓氱骇鍒嗗竷寮忓井鏈嶅姟骞冲彴
+  软件著作权: http://paascloud.net
+  著作登记号: 2018SR320076
+  关于我们: xxxx
 liquibase:
   change-log: classpath:liquibase/index.xml
   password: ${spring.datasource.password}
