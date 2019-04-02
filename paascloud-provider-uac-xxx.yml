@@ -1,0 +1,244 @@
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+        timeout:
+          enabled: true
+info:
+  鍏充簬鎴戜滑: http://paascloud.net
+  钁椾綔鐧昏鍙�: 2018SR320076
+  杞欢钁椾綔鏉�: paascloud蹇€熸惌寤轰紒涓氱骇鍒嗗竷寮忓井鏈嶅姟骞冲彴
+liquibase:
+  change-log: classpath:liquibase/index.xml
+  password: ${spring.datasource.password}
+  url: jdbc:mysql://paascloud-db-mysql:3306/paascloud_uac?characterEncoding=utf8&useSSL=false
+  user: ${spring.datasource.username}
+management:
+  security:
+    enabled: false
+mapper:
+  identity: MYSQL
+  mappers: com.paascloud.core.mybatis.MyMapper
+  not-empty: false
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml,classpath*:sdk/mapper/*.xml
+  type-aliases-package: com.paascloud.provider.model.domain
+paascloud:
+  alipay:
+    callback:
+      url: http://dev-api.paascloud.net/omc/pay/alipayCallback
+    qrCode:
+      pcPath: /data/file/qrCode/alipay
+      qiniuPath: alipay/QRCode/
+  aliyun:
+    key:
+      accessKeyId: your aliyun accessKeyId
+      accessKeySecret: your aliyun accessKeySecret
+    rocketMq:
+      consumerGroup: CID_UAC
+      enable: true
+      instanceName: paascloud-provider-uac
+      namesrvAddr: paascloud-mq-rocket:9876
+      producerGroup: PID_UAC
+      reliableMessageConsumer: false
+      reliableMessageProducer: true
+    sms:
+      domain: dysmsapi.aliyuncs.com
+      endpoint: ''
+      endpointName: cn-beijing
+      product: your sms product
+      regionId: cn-beijing
+      signName: 蹇箰瀛︿範缃�
+  auth:
+    active-user-url: http://dev-api.paascloud.net:7979/uac/auth/activeUser/
+    jwt:
+      expiredMinutes: 120
+      expiredRemainMinutes: 20
+    refresh-token-url: http://dev-api.paascloud.net:7979/uac/oauth/token
+    rest-pwd-url: http://dev-login.paascloud.net/resetPwd?resetPwdKey=
+  enableSqlLogInterceptor: false
+  oauth2:
+    client:
+      accessTokenUrl: http://paascloud-gateway:7979/uac/oauth/token
+      clientAuthenticationScheme: header
+      clientId: paascloud-client-uac
+      clientSecret: paascloudClientSecret
+      id: paascloud-resource-uac
+    jwtSigningKey: paascloud
+  qiniu:
+    key:
+      accessKey: your qiniu accessKey
+      secretKey: your qiniu secretKey
+    oss:
+      privateHost: your qiniu oss private host
+      publicHost: your qiniu oss public host
+  security:
+    code:
+      image:
+        expireIn: 180
+        url: /auth/register,/auth/submitResetPwdEmail,/auth/code/sms
+      sms:
+        expireIn: 600
+        ipMaxSendCount: 2
+        mobileMaxSendCount: 1
+        totalMaxSendCount: 3
+        url: /uac/auth/submitResetPwdPhone
+    oauth2:
+      clients:
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-uac
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-browser
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-gateway
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-zipkin
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-mdc
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-omc
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-opc
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      - accessTokenValidateSeconds: 7200
+        clientId: paascloud-client-tpc
+        clientSecret: paascloudClientSecret
+        scope: '*'
+      tokenStore: jwt
+    social:
+      filterProcessesUrl: /auth/callback
+      qq:
+        app-id: 101431061
+        app-secret: 0154c848f45fc705412462d4f99a592c
+        providerId: qq
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4
+        providerId: weixin
+  token:
+    interceptor:
+      enable: true
+  zk:
+    zkAddressList: paascloud-provider-zk:2181
+pagehelper:
+  helperDialect: mysql
+  params: count=countSql
+  reasonable: true
+  supportMethodsArguments: true
+ribbon:
+  ConnectTimeout: 60000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  OkToRetryOnAllOperations: false
+  ReadTimeout: 20000
+  eager-load:
+    enabled: true
+security:
+  oauth2:
+    client:
+      access-token-uri: http://paascloud-gateway:7979/uac/oauth/token
+      clientId: paascloud-client-uac
+      clientSecret: paascloudClientSecret
+      user-authorization-uri: http://paascloud-gateway:7979/uac/oauth/authorize
+    resource:
+      filter-order: 3
+      id: paascloud-resource-uac
+server:
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    uri-encoding: UTF-8
+  use-forward-headers: true
+spring:
+  aop:
+    auto: true
+    proxy-target-class: true
+  boot:
+    admin:
+      password: admin
+      username: admin
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 50
+      max-active: 100
+      min-evictable-idle-time-millis: 300000
+      min-idle: 50
+      stat-view-servlet:
+        allow: ''
+        login-password: admin
+        login-username: admin
+      test-on-borrow: true
+      time-between-eviction-runs-millis: 60000
+      web-stat-filter:
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+    filters: stat,wall
+    url: jdbc:mysql://paascloud-db-mysql:3306/paascloud_uac?characterEncoding=utf8&useSSL=false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+  mail:
+    default-encoding: UTF-8
+    host: smtp.163.com
+    password: a123456
+    port: 465
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          connectiontimeout: 10000
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          starttls:
+            enable: true
+            required: true
+          timeout: 10000
+          writetimeout: 10000
+    protocol: smtp
+    test-connection: false
+    username: paascloudTest@163.com
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  rabbitmq:
+    host: paascloud-mq-rabbit
+    password: guest
+    port: 5672
+    username: guest
+  redis:
+    host: paascloud-db-redis
+    password: 123456
+    port: 6379
+    timeout: 0
+  sleuth:
+    sampler:
+      percentage: 0.2
+  zipkin:
+    rabbitmq:
+      queue: zipkin
